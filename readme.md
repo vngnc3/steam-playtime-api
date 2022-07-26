@@ -40,17 +40,15 @@ Expected response:
 
 Using [Nightbot](https://nightbot.tv/) and [DecAPI](https://decapi.me/), one can automate the API call and get the playtime of the currently streamed game on Twitch.   
 
-The Nightbot command are built upon two interfaces:  
-1. This API interface: `<HOSTNAME>/playtime/<GAME_NAME>`, and
-2. The DecAPI interface: `https://decapi.me/twitch/game/<CHANNEL_NAME>`.  
+The Nightbot command will use two APIs respectively:  
+1. ✨This API✨ `<HOSTNAME>/playtime/<GAME_NAME>`, and
+2. DecAPI `https://decapi.me/twitch/game/<CHANNEL_NAME>`.  
 
-Implementing this feature in Nightbot can be done by nesting Nightbot [variables](https://docs.nightbot.tv/commands/variableslist):  
+Implementation in Nightbot can be done by nesting Nightbot [variables](https://docs.nightbot.tv/commands/variableslist):  
 
 ```
 $(urlfetch <HOSTNAME>/playtime/$(urlfetch https://decapi.me/twitch/game/<CHANNEL_NAME>))
 ```   
-
-Not a developer?
 
 --- 
 
