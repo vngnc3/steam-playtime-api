@@ -4,7 +4,7 @@ import Fastify from 'fastify';
 const fastify = Fastify({ logger: true });
 
 // Define streamer's Steam ID & Steam API key (required for private accounts).
-// See: https://community.nightdev.com/t/hours-command-to-return-steam-game-hours/8902
+// See: https://docs.decapi.me/steam
 const steamId = process.env.STEAM_ID;
 const steamAPIKey = process.env.STEAM_API_KEY;
 
@@ -15,9 +15,10 @@ fastify.get('/', async (request, reply) => {
 
 // SteamID must be in 64bit format, account must be public. AppID is the game ID.
 // Private Steam accounts may use a dedicated Steam web API key. 
+// See: https://steamcommunity.com/dev/
 fastify.get('/playtime/:game', async (request, reply) => {
   const appid = await getAppid(request.params.game);
-  const decapiResponse = await got(`https://decapi.me/steam/hours?id=${steamId}&appid=${appid}`);
+  const decapiResponse = await got(`https://decapi.me/steam/hours?id=${steamId}&appid=${appid}&key=${steamAPIKey}`);
   return `Izzy has been playing ${request.params.game} for ${decapiResponse.body}.`;
 });
 
