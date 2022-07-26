@@ -19,7 +19,7 @@ Useful for custom chatbot commands and Twitch integration.
 1. Clone this repo.  
 2. Install Node.js dependencies: `npm install`  
 3. Create a `.env` file on the root directory.  
-4.  Set your Steam user ID and (optional) [Steam API key](https://steamcommunity.com/dev) in the .env file.  
+4.  Set the streamer's Steam user ID and (optional) [Steam API key](https://steamcommunity.com/dev) in the .env file.  
 5. Run the server: `node server`  
 6. Fastify server will run on port `3000`.
 
@@ -38,16 +38,19 @@ Expected response:
 
 # Recommended Usage  
 
-[Nightbot](https://nightbot.tv/) is capable of using the API seamlessly by calling the built-in [command](https://docs.nightbot.tv/commands/game) `!game`.  
-As Nightbot returns the title of the game, a custom command can be created to call the API.  
+Using [Nightbot](https://nightbot.tv/) and [DecAPI](https://decapi.me/), one can automate the API call and get the playtime of the currently streamed game on Twitch.   
 
-For instance: A custom command `!playtime` internally calls the `!game` command, and using the response to call this API.  
+The Nightbot command are built upon two interfaces:  
+1. This API interface: `<HOSTNAME>/playtime/<GAME_NAME>`, and
+2. The DecAPI interface: `https://decapi.me/twitch/game/<CHANNEL_NAME>`.  
+
+Implementing this feature in Nightbot can be done by nesting Nightbot [variables](https://docs.nightbot.tv/commands/variableslist):  
 
 ```
-    !playtime
-```
+$(urlfetch <HOSTNAME>/playtime/$(urlfetch https://decapi.me/twitch/game/<CHANNEL_NAME>))
+```   
 
-The command above is expected to return the streamer's playtime of the streamed game in the chat.   
+Not a developer?
 
 --- 
 
